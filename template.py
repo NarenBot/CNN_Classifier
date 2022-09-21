@@ -29,7 +29,7 @@ list_of_files = [
     "setup.py",
     "setup.cfg",
     "pyproject.toml",
-    "toxi.ini",
+    "tox.ini",
     "research/trails.ipynb"
 ]
 
