@@ -11,10 +11,10 @@ package_name = "CNN_Classifier"
 list_of_files = [
     ".github/workflows/.gitkeep",
     f"scripts/{package_name}/__init__.py",
-    f"scripts/{package_name}/components/__init__.py",
-    f"scripts/{package_name}/config/__init__.py",
-    f"scripts/{package_name}/entity/__init__.py",
     f"scripts/{package_name}/constants/__init__.py",
+    f"scripts/{package_name}/entity/__init__.py",
+    f"scripts/{package_name}/config/__init__.py",
+    f"scripts/{package_name}/components/__init__.py",
     f"scripts/{package_name}/pipeline/__init__.py",
     f"scripts/{package_name}/utils/__init__.py",
     "tests/__init__.py",
