@@ -1,1 +1,11 @@
 # dvc.yaml, Airflow-->Orchestration Method
+# Commands= dvc repro; dvc dag
+
+stages:
+  data_ingestion:
+    cmd: python scripts/CNN_Classifier/pipeline/stage_01_data_ingestion.py
+    deps:
+      - scripts/CNN_Classifier/pipeline/stage_01_data_ingestion.py
+      - configs_yaml/config.yaml
+    outs:
+      - artifacts/data_ingestion/PetImages
