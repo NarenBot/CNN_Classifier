@@ -1,4 +1,4 @@
-# dvc.yaml, Airflow-->Orchestration Method
+# dvc.yaml, Airflow, MLflow-->Orchestration Method
 # Commands= dvc repro; dvc dag
 
 stages:
@@ -6,6 +6,51 @@ stages:
     cmd: python scripts/CNN_Classifier/pipeline/stage_01_data_ingestion.py
     deps:
       - scripts/CNN_Classifier/pipeline/stage_01_data_ingestion.py
-      - configs_yaml/config.yaml
+      - configs/config.yaml
     outs:
       - artifacts/data_ingestion/PetImages
+
+  prepare_base_model:
+    cmd: python scripts/CNN_Classifier/pipeline/stage_02_prepare_base_model.py
+    deps:
+      - scripts/CNN_Classifier/pipeline/stage_02_prepare_base_model.py
+      - configs/config.yaml
+    params:
+      - IMAGE_SIZE
+      - INCLUDE_TOP
+      - CLASSES
+      - WEIGHTS
+      - LEARNING_RATE
+    outs:
+      - artifacts/prepare_base_model
+
+
+  training:
+    cmd: python scripts/CNN_Classifier/pipeline/stage_03_training.py
+    deps:
+      - scripts/CNN_Classifier/pipeline/stage_03_training.py
+      - scripts/CNN_Classifier/components/prepare_callback.py
+      - configs/config.yaml
+      - artifacts/data_ingestion/PetImages
+      - artifacts/prepare_base_model
+    params:
+      - IMAGE_SIZE
+      - EPOCHS
+      - BATCH_SIZE
+      - AUGMENTATION
+    outs:
+      - artifacts/training/model.h5
+
+  evaluation:
+    cmd: python scripts/CNN_Classifier/pipeline/stage_04_evaluation.py
+    deps:
+      - scripts/CNN_Classifier/pipeline/stage_04_evaluation.py
+      - configs/config.yaml
+      - artifacts/data_ingestion/PetImages
+      - artifacts/training/model.h5
+    params:
+      - IMAGE_SIZE
+      - BATCH_SIZE
+    metrics:
+    - scores.json:
+        cache: false
