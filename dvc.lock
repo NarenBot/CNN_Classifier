@@ -3,7 +3,7 @@ stages:
   data_ingestion:
     cmd: python scripts/CNN_Classifier/pipeline/stage_01_data_ingestion.py
     deps:
-    - path: configs_yaml/config.yaml
+    - path: configs/config.yaml
       md5: 1ec520a6d61da3ea35c23366a01cf083
       size: 829
     - path: scripts/CNN_Classifier/pipeline/stage_01_data_ingestion.py
@@ -35,6 +35,6 @@ stages:
         WEIGHTS: imagenet
     outs:
     - path: artifacts/prepare_base_model
-      md5: b3d9528d1928510a57d8b6884e16dd11.dir
+      md5: bc53c3140575f149367eab0f4ec47539.dir
       size: 118053368
       nfiles: 2
