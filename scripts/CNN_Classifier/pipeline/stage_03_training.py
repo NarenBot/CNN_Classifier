@@ -1,8 +1,22 @@
 from CNN_Classifier.config import ConfigurationManager
 from CNN_Classifier.components import PrepareCallback, Training
 from CNN_Classifier import logger
+import os
+import tensorflow as tf
+
 
 STAGE_NAME = "Training"
+
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
+gpus = tf.config.list_physical_devices('GPU')
+if gpus:
+    for gpu in gpus:
+        tf.config.experimental.set_memory_growth(gpu, True)
+
+
+
 
 def main():
     config = ConfigurationManager()
