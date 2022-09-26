@@ -38,3 +38,63 @@ stages:
       md5: bc53c3140575f149367eab0f4ec47539.dir
       size: 118053368
       nfiles: 2
+  training:
+    cmd: python scripts/CNN_Classifier/pipeline/stage_03_training.py
+    deps:
+    - path: artifacts/data_ingestion/PetImages
+      md5: 3a5cf86541f22c236620ce5b952ad684.dir
+      size: 848866410
+      nfiles: 24998
+    - path: artifacts/prepare_base_model
+      md5: bc53c3140575f149367eab0f4ec47539.dir
+      size: 118053368
+      nfiles: 2
+    - path: configs/config.yaml
+      md5: 1ec520a6d61da3ea35c23366a01cf083
+      size: 829
+    - path: scripts/CNN_Classifier/components/prepare_callback.py
+      md5: 3fc4d32bdc50717d485b465a4c63af5f
+      size: 921
+    - path: scripts/CNN_Classifier/pipeline/stage_03_training.py
+      md5: 954e82dced2df093927084a48f284dec
+      size: 1241
+    params:
+      params.yaml:
+        AUGMENTATION: true
+        BATCH_SIZE: 16
+        EPOCHS: 1
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: artifacts/training/model.h5
+      md5: 104d996e698fbcad7fbed3cb6f1a380e
+      size: 59135136
+  evaluation:
+    cmd: python scripts/CNN_Classifier/pipeline/stage_04_evaluation.py
+    deps:
+    - path: artifacts/data_ingestion/PetImages
+      md5: 3a5cf86541f22c236620ce5b952ad684.dir
+      size: 848866410
+      nfiles: 24998
+    - path: artifacts/training/model.h5
+      md5: 104d996e698fbcad7fbed3cb6f1a380e
+      size: 59135136
+    - path: configs/config.yaml
+      md5: 1ec520a6d61da3ea35c23366a01cf083
+      size: 829
+    - path: scripts/CNN_Classifier/pipeline/stage_04_evaluation.py
+      md5: b6089397b64a3935e65e98cbdeb68311
+      size: 699
+    params:
+      params.yaml:
+        BATCH_SIZE: 16
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: scores.json
+      md5: 315a53eb23cfbdaddb7428c5f1a13af5
+      size: 73

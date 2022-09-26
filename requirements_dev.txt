@@ -13,6 +13,8 @@ joblib
 types-PyYAML
 scipy
 sklearn
+mlflow
+
 
 # Custom Package
 -e .
